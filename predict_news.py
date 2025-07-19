@@ -2,14 +2,28 @@ import streamlit as st
 from joblib import load
 import re
 import nltk
+import os
+
+# Set custom path for nltk_data
+NLTK_DATA_DIR = "nltk_data"
+nltk.data.path.append(NLTK_DATA_DIR)
+
+# Download required nltk packages if not already present
+nltk_resources = {
+    "punkt": "tokenizers/punkt",
+    "stopwords": "corpora/stopwords",
+    "wordnet": "corpora/wordnet"
+}
+
+for resource, path in nltk_resources.items():
+    try:
+        nltk.data.find(path)
+    except LookupError:
+        nltk.download(resource, download_dir=NLTK_DATA_DIR)
+
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-
-# Download necessary NLTK data
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
 
 # Load model and vectorizer
 model = load('news_classifier_model.pkl')
@@ -75,7 +89,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App content
+# App layout
 st.markdown('<div class="main">', unsafe_allow_html=True)
 
 st.markdown('<div class="center-title">📰 Fake News Detector</div>', unsafe_allow_html=True)
