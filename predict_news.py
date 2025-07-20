@@ -6,16 +6,16 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-# Download necessary NLTK data
+
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-# Load model and vectorizer
+
 model = load('news_classifier_model.pkl')
 vectorizer = load('tfidf_vectorizer.pkl')
 
-# Preprocessing function
+
 def preprocess_text(text):
     text = re.sub(r'[^a-zA-Z]', ' ', text).lower()
     tokens = word_tokenize(text)
@@ -27,10 +27,10 @@ def preprocess_text(text):
     ]
     return " ".join(clean_tokens)
 
-# Page setup
+
 st.set_page_config(page_title="Fake News Detector", layout="wide")
 
-# Custom CSS styling
+
 st.markdown(
     """
     <style>
@@ -75,7 +75,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# App content
+
 st.markdown('<div class="main">', unsafe_allow_html=True)
 
 st.markdown('<div class="center-title">📰 Fake News Detector</div>', unsafe_allow_html=True)
